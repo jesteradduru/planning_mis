@@ -21,7 +21,7 @@ class App extends React.Component {
   render() {
     return (
 
-      <>
+      <Container fluid>
         <Router>
           <Row>
             <Col md="2">
@@ -43,7 +43,7 @@ class App extends React.Component {
           </Row>
         </Router>
         
-      </>
+      </Container>
     );
   }
 }
