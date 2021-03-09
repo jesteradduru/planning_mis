@@ -1,5 +1,7 @@
 import React from 'react';
 import { Nav, NavItem, NavLink, NavbarBrand } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFileExcel, faHome } from '@fortawesome/free-solid-svg-icons'
 import {
     BrowserRouter as Router,
     Switch,
@@ -8,21 +10,27 @@ import {
   } from "react-router-dom";
 const VerticalMenuBar = (props) => {
   return (
-      <Nav vertical navbar className="bg-primary px-3" style={{height:"100vh"}} > 
+      <Nav vertical navbar className="bg-dark px-3" style={{height:"100vh"}} > 
         <NavItem>
             <NavbarBrand> 
-                <Link to="/" href="#" className="text-light nav-link">Dashboard</Link>
+                <Link to="/" href="#" className="text-warning nav-link">
+                  <FontAwesomeIcon icon={faHome} size="lg" />
+                  <span className="ml-2">Dashboard</span>
+                </Link>
             </NavbarBrand>
         </NavItem>
         <NavItem>
-          <Link href="#" to="/parseExcel" className="text-light nav-link">Parse Excel Data</Link>
+          <Link href="#" to="/parseExcel" className="text-light nav-link">
+            <FontAwesomeIcon icon={faFileExcel} size="1x" />
+            <span className="ml-2">Read Excel</span>
+          </Link>
         </NavItem>
-        <NavItem>
+        {/* <NavItem>
           <NavLink href="#" className="text-light">Link</NavLink>
         </NavItem>
         <NavItem>
           <NavLink href="#" className="text-light">Link</NavLink>
-        </NavItem>
+        </NavItem> */}
       </Nav>
   );
 }

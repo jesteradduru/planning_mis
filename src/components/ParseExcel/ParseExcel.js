@@ -43,7 +43,7 @@ class ParseExcel extends React.Component{
         return (
             
             <>
-                <h1>Parse Excel Data</h1>
+                <h1>Read Excel</h1>
                 <input type="file" name="" id="form"/>
                 <hr className="bg-warning"/>
                 <div>
