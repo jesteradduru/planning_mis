@@ -13,7 +13,7 @@ const VerticalMenuBar = (props) => {
       <Nav vertical navbar className="bg-dark px-3" style={{height:"100vh"}} > 
         <NavItem>
             <NavbarBrand> 
-                <Link to="/" href="#" className="text-warning nav-link">
+                <Link to="/dashboard" href="#" className="text-warning nav-link">
                   <FontAwesomeIcon icon={faHome} size="lg" />
                   <span className="ml-2">Dashboard</span>
                 </Link>

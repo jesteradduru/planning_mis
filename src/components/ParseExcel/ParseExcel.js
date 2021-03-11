@@ -1,8 +1,6 @@
 import React from "react";
 import { Button, Spinner, Table } from "reactstrap";
 import * as XLSX from 'xlsx';
-import CanvasDatagrid from "canvas-datagrid";
-import { Alert, Tab } from "bootstrap";
 import HtmlTable from "../Table/HtmlTable"
 
 class ParseExcel extends React.Component{
