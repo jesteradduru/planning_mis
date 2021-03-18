@@ -1,6 +1,9 @@
 import React from "react";
-import { Button, Spinner, Table } from "reactstrap";
+import { Button, Spinner, Row, Col } from "reactstrap";
 import * as XLSX from 'xlsx';
+import Select from "../FormInputs/Select";
+import List from "../FormInputs/List";
+import Input from "../FormInputs/Input";
 import HtmlTable from "../Table/HtmlTable"
 
 class ParseExcel extends React.Component{
@@ -26,6 +29,8 @@ class ParseExcel extends React.Component{
                 const ws = wb.Sheets[wsname];
                 /* Convert array of arrays */
                 const data = XLSX.utils.sheet_to_html(ws);
+                const sampdata = XLSX.utils.sheet_to_json(ws);
+                console.log(sampdata)
                 /* Update state */
                 this.setState({gridContainer: {htmlData: data, isLoading: false} });
             };
@@ -33,22 +38,31 @@ class ParseExcel extends React.Component{
         }else{
             alert("select file!")
         }
-       
       }
-
     render() {
         const {isLoading, htmlData} = this.state.gridContainer;
         return (
             
             <>
-                <h1>Read Excel</h1>
-                <input type="file" name="" id="form"/>
+                <h1>Submit Form</h1>
+                <Row>
+                    <Col>
+                        <Select id="selectForm" label="Select Form:" classNames="form-group">
+                            <List name="BP201" value="BP201"/>
+                        </Select>
+                    </Col>
+                    <Col>
+                        <Input type="file" inputName="Form:" id="form" />
+                    </Col>
+                </Row>
+              
+                
                 <hr className="bg-warning"/>
                 <div>
                     <Button color="success" onClick={() => {
                         const file = document.getElementById("form");
                         this.onSelectFile(file.files[0])
-                    }}>Read</Button>
+                    }}>Submit</Button>
                 </div>
                 <br/>   
                 <div id="grid-container" style={{height: "70vh", overflow: "scroll"}}>
