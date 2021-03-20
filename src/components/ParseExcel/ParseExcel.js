@@ -1,80 +1,77 @@
 import React from "react";
 import { Button, Spinner, Row, Col } from "reactstrap";
-import * as XLSX from 'xlsx';
 import Select from "../FormInputs/Select";
 import List from "../FormInputs/List";
 import Input from "../FormInputs/Input";
-import HtmlTable from "../Table/HtmlTable"
 
 class ParseExcel extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            gridContainer: {
-                isLoading: false,
-                htmlData: ""
-            }
+            excelToUpload: null,
+            folderId: "1pWM3FP1SWk-ibxvrKjX8Edv0_Gx3VDA2",
+            isLoading: false
         }
     }
-    onSelectFile = (f) => {
-        if(typeof f === "object"){
-            this.setState({gridContainer: {isLoading: true} });
-            const reader = new FileReader();
-            reader.onload = (evt) => { // evt = on_file_select event
-                /* Parse data */
-                const bstr = evt.target.result;
-                const wb = XLSX.read(bstr, {type:'binary'});
-                /* Get first worksheet */
-                const wsname = wb.SheetNames[0];
-                const ws = wb.Sheets[wsname];
-                /* Convert array of arrays */
-                const data = XLSX.utils.sheet_to_html(ws);
-                const sampdata = XLSX.utils.sheet_to_json(ws);
-                console.log(sampdata)
-                /* Update state */
-                this.setState({gridContainer: {htmlData: data, isLoading: false} });
-            };
-            reader.readAsBinaryString(f);
-        }else{
-            alert("select file!")
-        }
-      }
+    onChangeFile = (e) => {
+        this.setState({excelToUpload: e.target.files[0]})
+    }
+
+    onSelectFormType = (e) => {
+        this.setState({folderId: e.target.value})
+    }
+
+    onSubmitFile = () => {
+        this.setState({isLoading: true})
+        const formData = new FormData();
+        formData.append("excel", this.state.excelToUpload);
+        formData.append("folderId", this.state.folderId);
+
+        fetch("http://localhost:3001/submitForm", {
+            method: "post",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data !== "error"){
+                alert("Form submitted!")
+                console.log(data)
+                this.setState({isLoading: false});
+            }else{
+                alert("something went wrong");
+                this.setState({isLoading: false});
+            }
+        })
+        .catch(err => {
+            alert("something went wrong");
+            this.setState({isLoading: false});
+        })
+    }
+
     render() {
-        const {isLoading, htmlData} = this.state.gridContainer;
+        const {isLoading} = this.state;
         return (
             
             <>
                 <h1>Submit Form</h1>
                 <Row>
                     <Col>
-                        <Select id="selectForm" label="Select Form:" classNames="form-group">
-                            <List name="BP201" value="BP201"/>
+                        <Select id="selectForm" label="Select Form:" classNames="form-group" onChange={this.onSelectFormType}>
+                            <List name="BP201" value="1pWM3FP1SWk-ibxvrKjX8Edv0_Gx3VDA2" />
                         </Select>
                     </Col>
                     <Col>
-                        <Input type="file" inputName="Form:" id="form" />
+                        <Input type="file" inputName="Form:" id="form" onChange={this.onChangeFile} />
                     </Col>
                 </Row>
               
                 
                 <hr className="bg-warning"/>
                 <div>
-                    <Button color="success" onClick={() => {
-                        const file = document.getElementById("form");
-                        this.onSelectFile(file.files[0])
-                    }}>Submit</Button>
+                    <Button color="success" onClick={this.onSubmitFile}>Submit</Button>
+                    {isLoading ? <><span className="ml-3">Submitting</span><Spinner color="primary" /></> : null }
                 </div>
-                <br/>   
-                <div id="grid-container" style={{height: "70vh", overflow: "scroll"}}>
-                    {isLoading 
-                    ? 
-                    <div className="text-center">
-                        <h6>Loading</h6>
-                        <Spinner color="primary" />
-                    </div>
-                    : 
-                    <HtmlTable htmldata={htmlData} /> }
-                </div>
+                <br/> 
             </>
         )
     }

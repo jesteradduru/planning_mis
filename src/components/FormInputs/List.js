@@ -1,8 +1,8 @@
 import React from 'react';
 
-const List = ({name, val}) => {
+const List = ({name, value}) => {
     return (
-        <option value={val}>{name}</option>
+        <option value={value}>{name}</option>
     )
 }
 
