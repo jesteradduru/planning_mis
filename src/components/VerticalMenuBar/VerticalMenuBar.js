@@ -13,7 +13,7 @@ const VerticalMenuBar = () => {
             </Link>
         </NavItem>
         <NavItem>
-          <Link href="#" to="/parseExcel" className="text-light nav-link">
+          <Link href="#" to="/submitForm" className="text-light nav-link">
             <FontAwesomeIcon icon={faUpload} size="1x" />
             <span className="ml-2">Submit Form</span>
           </Link>
