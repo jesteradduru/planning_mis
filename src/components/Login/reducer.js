@@ -1,11 +1,7 @@
-import { SIGNIN_FAILED, SIGNIN_PENDING, SIGNIN_SUCCESS, INPUT_CHANGE } from "./constants"
-
-
+import { REMEMBER_USER, SIGNIN_FAILED, SIGNIN_PENDING, SIGNIN_SUCCESS } from "./constants"
 
 const initLoginState = {
     user: [],
-    username: "",
-    password: "",
     errorMsg: "",
     isLoaderHidden: true,
     isLoading: false
@@ -18,9 +14,9 @@ export const signIn = (state = initLoginState, action={}) => {
         case SIGNIN_SUCCESS:
             return Object.assign({}, state, { user: action.payload })
         case SIGNIN_FAILED:
-            return Object.assign({}, state, { errorMsg: "invalid credentials" })
-        case INPUT_CHANGE:
-            return Object.assign({}, state, action.payload)
+            return Object.assign({}, state, { errorMsg: "invalid credentials" , isLoaderHidden: true})
+        case REMEMBER_USER:
+            return Object.assign({}, state, { user: action.payload })
         default:
             return state;
     }

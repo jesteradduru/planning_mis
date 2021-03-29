@@ -2,4 +2,4 @@ export const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
 export const SIGNIN_FAILED = "SIGNIN_FAILED";
 export const SIGNIN_PENDING = "SIGNIN_PENDING";
 
-export const INPUT_CHANGE = "INPUT_CHANGE";
+export const REMEMBER_USER = "REMEMBER_USER";
