@@ -17,7 +17,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     onGetForms: (username) => dispatch(getForms(username)),
-    onGenerateReport: (corn, livestock) => dispatch(generateReport(corn, livestock))
+    onGenerateReport: () => dispatch(generateReport())
 });
 
 class View extends React.Component {
@@ -43,7 +43,7 @@ class View extends React.Component {
                 <div className="d-flex justify-content-between">
                     <h1>View Forms</h1>
                     <div>
-                        {username === "admin"? <Button color="primary" onClick={() => onGenerateReport( forms[0].id, forms[1].id )}>Generate Report</Button> :null}
+                        {username === "admin"? <Button color="primary" onClick={onGenerateReport}>Generate Report</Button> :null}
                     </div>
                 </div>
                 <Container fluid>

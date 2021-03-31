@@ -68,10 +68,18 @@ export const submitForm = ( folderId, formName, file, username ) => dispatch => 
 }
 
 
-export const generateReport = ( corn, livestock ) => dispatch => {
+export const generateReport = () => (dispatch, getState) => {
+    const state = getState();
+    const forms = state.getForms.forms.map(form => {
+        return {name: form.name, id: form.id }
+    });
     
     dispatch({ type:  GEN_REPORT_PENDING})
-    fetch(`http://localhost:3001/generateReport/${corn}/${livestock}`)
+    fetch(`http://localhost:3001/generateReport/`, {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({forms: forms})
+    })
     .then(res => res.json())
     .then(data => {
         if(data !== "error"){
@@ -79,7 +87,7 @@ export const generateReport = ( corn, livestock ) => dispatch => {
             {
                 window.open(
                     'https://docs.google.com/spreadsheets/d/1CsTYuWjhOB2vgbSnhOXeApaGSD1HwqSwpJ4ZLf4HKX4/',
-                    '_blank' // <- This is what makes it open in a new window.
+                    '_blank'
                 );
             };
             
